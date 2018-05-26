@@ -8,6 +8,7 @@
 package com.sparkge.rendering;
 
 import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.system.*;
 
 import java.nio.*;
@@ -40,29 +41,15 @@ public class Window {
      * @description initializes window
      */
     public void init() {
-        // Setup an error callback. The default implementation
-        // will print the error message in System.err.
-        GLFWErrorCallback.createPrint(System.err).set();
 
-        // Initialize GLFW. Most GLFW functions will not work before doing this.
-        if ( !glfwInit() )
-            throw new IllegalStateException("Unable to initialize GLFW");
-
-        // Configure GLFW
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+        this.initGLFW();
 
         // Create the window
         this.contextHandle = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if ( this.contextHandle == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(this.contextHandle, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-        });
+        this.setWindowKeyListener();
 
         // Get the thread stack and push a new frame
         try ( MemoryStack stack = stackPush() ) {
@@ -88,8 +75,18 @@ public class Window {
         // Enable v-sync
         glfwSwapInterval(1);
 
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes the OpenGL
+        // bindings available for use.
+        GL.createCapabilities();
+
         // Make the window visible
         glfwShowWindow(this.contextHandle);
+
+        // Set the clear color
+        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
     }
 
     /**
@@ -105,6 +102,9 @@ public class Window {
         glfwPollEvents();
     }
 
+    /**
+     * @description destroys window and frees memory
+     */
     public void destroy() {
         // Free the window callbacks and destroy the window
         glfwFreeCallbacks(this.contextHandle);
@@ -121,6 +121,35 @@ public class Window {
      */
     public boolean shouldClose() {
         return glfwWindowShouldClose(this.contextHandle);
+    }
+
+    /**
+     * @description initializes GLFW functions
+     */
+    private void initGLFW() {
+        // Setup an error callback. The default implementation
+        // will print the error message in System.err.
+        GLFWErrorCallback.createPrint(System.err).set();
+
+        // Initialize GLFW. Most GLFW functions will not work before doing this.
+        if ( !glfwInit() )
+            throw new IllegalStateException("Unable to initialize GLFW");
+
+        // Configure GLFW
+        glfwDefaultWindowHints(); // optional, the current window hints are already the default
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+    }
+
+    /**
+     * @description sets the key event callback for the window
+     */
+    private void setWindowKeyListener() {
+        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
+        glfwSetKeyCallback(this.contextHandle, (window, key, scancode, action, mods) -> {
+            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
+                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+        });
     }
 
     /**
