@@ -1,5 +1,6 @@
 package com.sparkge.core;
 
+import com.sparkge.rendering.Window;
 import org.lwjgl.*;
 
 public class Main {
@@ -12,7 +13,8 @@ public class Main {
     }
 
     private void init() {
-        engine = new CoreEngine();
+        Window window = new Window("Game", 1920, 1080);
+        engine = new CoreEngine(window);
         engine.start();
     }
 

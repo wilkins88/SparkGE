@@ -143,6 +143,7 @@ public class Window {
 
     /**
      * @description sets the key event callback for the window
+     * TODO this can be set in the input class coming up
      */
     private void setWindowKeyListener() {
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.

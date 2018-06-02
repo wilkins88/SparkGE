@@ -1,4 +1,10 @@
 package com.sparkge.math;
+/**
+ * @description Class for working with 2 dimensional vectors
+ * @author Thomas Wilkins | twilkins@radialspark.com
+ * @history
+ *  2018-05-26 | Thomas Wilkins | Created
+ */
 
 public class Vector2f {
     /**

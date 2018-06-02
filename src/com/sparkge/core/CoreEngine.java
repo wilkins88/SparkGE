@@ -21,10 +21,12 @@ public class CoreEngine implements Runnable {
 
     /**
      * @description constructor
-     * @param settings
-     * @param game
+     * @param window the opengl window wrapper class
+     * @param settings game settings
+     * @param game the game to be played!
      */
-    public CoreEngine(/* Settings settings, IGame game */) {
+    public CoreEngine(Window window/* Settings settings, IGame game */) {
+        this.window = window;
         // this.settings = settings;
         // this.game = game;
     }
@@ -56,7 +58,6 @@ public class CoreEngine implements Runnable {
      */
     private void init() {
         // this.settings = settings;
-        this.window = new Window("Game", 1920, 1080);
         this.window.init();
     }
 

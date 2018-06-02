@@ -3,6 +3,7 @@
  * @author Connor Zint | czint@radialspark.com
  * @history
  *  2018-05-26 | czint | Created
+ *  2018-06-01 | Thomas Wilkins | updated retrieval of matrices
  */
 
 package com.sparkge.math;
@@ -72,9 +73,10 @@ public class Matrix4f {
      */
     public Matrix4f add(Matrix4f m2) {
         float[][] m3 = new float[][]{};
+        float[][] otherM = m2.getM();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                m3[i][j] = this.m[i][j] + m2.get(i, j);
+                m3[i][j] = this.m[i][j] + otherM[i][j];
             }
         }
         return new Matrix4f(m3);
@@ -86,9 +88,10 @@ public class Matrix4f {
      * @return this
      */
     public Matrix4f addEq(Matrix4f m2) {
+        float[][] otherM = m2.getM();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                this.m[i][j] += m2.get(i, j);
+                this.m[i][j] += otherM[i][j];
             }
         }
         return this;
@@ -101,9 +104,10 @@ public class Matrix4f {
      */
     public Matrix4f sub(Matrix4f m2) {
         float[][] m3 = new float[][]{};
+        float[][] otherM = m2.getM();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                m3[i][j] = this.m[i][j] - m2.get(i, j);
+                m3[i][j] = this.m[i][j] - otherM[i][j];
             }
         }
         return new Matrix4f(m3);
@@ -115,9 +119,10 @@ public class Matrix4f {
      * @return this
      */
     public Matrix4f subEq(Matrix4f m2) {
+        float[][] otherM = m2.getM();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                this.m[i][j] -= m2.get(i, j);
+                this.m[i][j] -= otherM[i][j];
             }
         }
         return this;
