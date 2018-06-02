@@ -2,6 +2,7 @@ package com.sparkge.core;
 
 import com.sparkge.rendering.Window;
 import org.lwjgl.*;
+import com.sparkge.game.StarFoxLite;
 
 public class Main {
 
@@ -14,7 +15,7 @@ public class Main {
 
     private void init() {
         Window window = new Window("Game", 1920, 1080);
-        engine = new CoreEngine(window);
+        engine = new CoreEngine(window, new StarFoxLite());
         engine.start();
     }
 

@@ -11,13 +11,15 @@ import com.sparkge.rendering.Window;
 
 import java.lang.Runnable;
 
+import com.sparkge.game.IGame;
+
 public class CoreEngine implements Runnable {
 
     // TODO: uncomment member variable references once implemented
 
     // private Settings settings;
     private Window window;
-    // private IGame game;
+    private IGame game;
 
     /**
      * @description constructor
@@ -25,10 +27,10 @@ public class CoreEngine implements Runnable {
      * @param settings game settings
      * @param game the game to be played!
      */
-    public CoreEngine(Window window/* Settings settings, IGame game */) {
+    public CoreEngine(Window window/* Settings settings*/, IGame game ) {
         this.window = window;
         // this.settings = settings;
-        // this.game = game;
+        this.game = game;
     }
 
     /**
