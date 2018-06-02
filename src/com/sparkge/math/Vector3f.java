@@ -1,9 +1,10 @@
 package com.sparkge.math;
+
 /**
- * @description Class for working with 2 dimensional vectors
+ * @description Class for working with 3 dimensional vectors
  * @author Thomas Wilkins | twilkins@radialspark.com
  * @history
- *  2018-05-26 | Thomas Wilkins | Created
+ *  2018-06-02 | Thomas Wilkins | Created
  */
 
 public class Vector3f {
@@ -183,6 +184,11 @@ public class Vector3f {
         return this.x * v.getX() + this.y * v.getY() + this.z * v.getZ();
     }
 
+    /**
+     * @description calculates the cross product of 2 vectors
+     * @param v the vector to be crossed with
+     * @return a new vector resulting from the cross
+     */
     public Vector3f cross(Vector3f v) {
         return new Vector3f(
           this.y * v.getZ() - this.z * v.getY(),
@@ -191,6 +197,11 @@ public class Vector3f {
         );
     }
 
+    /**
+     * @description in place cross product of 2 vectors
+     * @param v the vector to be crossed with
+     * @return the calling vector
+     */
     public Vector3f crossEq(Vector3f v) {
         float newX = this.y * v.getZ() - this.z * v.getY();
         float newY = this.z * v.getX() - this.x * v.getZ();
@@ -257,12 +268,14 @@ public class Vector3f {
 
     /**
      * @description rotates the vector around provided angle
-     * @param angle angle in degrees
-     * @return new vector rotated around the angle
+     * @param v vector (axis) to rotate around
+     * @param angle the angle to rotate around the axis
+     * @return new rotated vector
      */
-    public Vector3f rotate() {
-        // TODO
-        return this;
+    public Vector3f rotate(Vector3f v, float angle) {
+        Quaternion q = new Quaternion(v.getX(), v.getY(), v.getZ(), angle);
+        Quaternion result = q.mul(new Quaternion(this.x, this.y, this.z, 0)).mul(q.getConjugate());
+        return new Vector3f(result.getX(), result.getY(), result.getZ());
     }
 
     /**
@@ -270,8 +283,12 @@ public class Vector3f {
      * @param angle angle in degrees
      * @return the calling vector
      */
-    public Vector3f rotateEq() {
-        // TODO
+    public Vector3f rotateEq(Vector3f v, float angle) {
+        Quaternion q = new Quaternion(v.getX(), v.getY(), v.getZ(), angle);
+        Quaternion result = q.mul(new Quaternion(this.x, this.y, this.z, 0)).mul(q.getConjugate());
+        this.x = result.getX();
+        this.y = result.getY();
+        this.z = result.getZ();
         return this;
     }
 
