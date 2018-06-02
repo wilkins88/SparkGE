@@ -99,8 +99,8 @@ public class CoreEngine implements Runnable {
 
         //initialize the Shader Program
         shaderProgram = new Shader();
-        shaderProgram.setVertexShader("#version 440 layout (location=0) in vec3 position; void main() { gl_Position = vec4(position, 1.0); }");
-        shaderProgram.setFragmentShader("#version 440 out vec4 fragColor; void main() { fragColor = vec4(0.0, 0.5, 0.5, 1.0); }");
+        shaderProgram.setVertexShader("#version 330 \n layout (location=0) in vec3 position; \n void main() \n { \n gl_Position = vec4(position, 1.0); \n }");
+        shaderProgram.setFragmentShader("#version 330 \n out vec4 fragColor; \n void main() { \n fragColor = vec4(0.0, 0.5, 0.5, 1.0); \n}");
         shaderProgram.link();
 
         //declare vertices of test triangle
@@ -134,11 +134,10 @@ public class CoreEngine implements Runnable {
         glBindVertexArray(0);
 
         //free memory from FloatBuffer
-        if (verticesBuffer != null) {
-            MemoryUtil.memFree(verticesBuffer);
-        }
+//        if (verticesBuffer != null) {
+//            MemoryUtil.memFree(verticesBuffer);
+//        }
 
-        renderShader();
     }
 
     private void renderShader() {
