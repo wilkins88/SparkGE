@@ -49,8 +49,6 @@ public class Window {
         if ( this.contextHandle == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
-        this.setWindowKeyListener();
-
         // Get the thread stack and push a new frame
         try ( MemoryStack stack = stackPush() ) {
             IntBuffer pWidth = stack.mallocInt(1); // int*
@@ -139,18 +137,6 @@ public class Window {
         glfwDefaultWindowHints(); // optional, the current window hints are already the default
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
-    }
-
-    /**
-     * @description sets the key event callback for the window
-     * TODO this can be set in the input class coming up
-     */
-    private void setWindowKeyListener() {
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(this.contextHandle, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-        });
     }
 
     /**

@@ -15,7 +15,7 @@ public class Main {
 
     private void init() {
         Window window = new Window("Game", 1920, 1080);
-        engine = new CoreEngine(window, new StarFoxLite());
+        engine = new CoreEngine(window, new StarFoxLite(), new Input(new Keyboard(), new Mouse(), window));
         engine.start();
     }
 

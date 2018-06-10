@@ -20,6 +20,7 @@ public class CoreEngine implements Runnable {
     // private Settings settings;
     private Window window;
     private IGame game;
+    private Input input;
 
     /**
      * @description constructor
@@ -27,16 +28,18 @@ public class CoreEngine implements Runnable {
      * @param settings game settings
      * @param game the game to be played!
      */
-    public CoreEngine(Window window/* Settings settings*/, IGame game ) {
+    public CoreEngine(Window window/* Settings settings*/, IGame game, Input input) {
         this.window = window;
         // this.settings = settings;
         this.game = game;
+        this.input = input;
     }
 
     /**
      * description initializes engine and starts the game loop
      */
     public void start() {
+        this.init();
         this.run();
     }
 
@@ -44,8 +47,6 @@ public class CoreEngine implements Runnable {
      * @description runs the game loop
      */
     public void run() {
-        this.init();
-
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !this.window.shouldClose() ) {
@@ -61,6 +62,7 @@ public class CoreEngine implements Runnable {
     private void init() {
         // this.settings = settings;
         this.window.init();
+        this.input.init();
     }
 
     /**
